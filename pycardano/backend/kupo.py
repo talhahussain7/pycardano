@@ -14,6 +14,7 @@ from pycardano.plutus import (
     PlutusV2Script,
     PlutusV3Script,
 )
+from pycardano.nativescript import NativeScript
 from pycardano.serialization import RawCBOR
 from pycardano.transaction import (
     Asset,
@@ -185,6 +186,9 @@ class KupoChainContextExtension(ChainContext):
                         script = _try_fix_script(script_hash, script)
                     elif script["language"] == "plutus:v1":
                         script = PlutusV1Script(bytes.fromhex(script["script"]))
+                        script = _try_fix_script(script_hash, script)
+                    elif script["language"] == "native":
+                        script = NativeScript.from_cbor(script["script"])
                         script = _try_fix_script(script_hash, script)
                     else:
                         raise ValueError("Unknown plutus script type")
