@@ -49,7 +49,7 @@ class NativeScript(ArrayCBORSerializable):
         elif script_type == ScriptAny._TYPE:
             return super(NativeScript, ScriptAny).from_primitive(value[1:])
         elif script_type == ScriptNofK._TYPE:
-            return super(NativeScript, ScriptNofK).from_primitive(value[1:])
+            return ScriptNofK(value[1:][1], [cls.from_primitive(script) for script in value[1:][0]])
         elif script_type == InvalidBefore._TYPE:
             return super(NativeScript, InvalidBefore).from_primitive(value[1:])
         elif script_type == InvalidHereAfter._TYPE:
