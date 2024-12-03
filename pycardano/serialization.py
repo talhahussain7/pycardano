@@ -536,7 +536,7 @@ def _restore_typed_primitive(
         if not isinstance(v, bytes):
             raise DeserializeException(f"Expected type bytes but got {type(v)}")
         return ByteString(v)
-    elif isclass(t) and t.__name__ in ["PlutusV1Script", "PlutusV2Script"]:
+    elif isclass(t) and t.__name__ in ["PlutusV1Script", "PlutusV2Script", "PlutusV3Script"]:
         if not isinstance(v, bytes):
             raise DeserializeException(f"Expected type bytes but got {type(v)}")
         return t(v)
@@ -672,7 +672,6 @@ class ArrayCBORSerializable(CBORSerializable):
             DeserializeException: When the object could not be restored from primitives.
         """
         all_fields = [f for f in fields(cls) if f.init]
-
         restored_vals = []
         type_hints = get_type_hints(cls)
         for f, v in zip(all_fields, values):
