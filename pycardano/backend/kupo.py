@@ -201,6 +201,8 @@ class KupoChainContextExtension(ChainContext):
                 )
                 if datum_hash and result.get("datum_type", "inline"):
                     datum = self._get_datum_from_kupo(result["datum_hash"])
+                    if datum:
+                        datum_hash = None
 
                 if not result["value"]["assets"]:
                     tx_out = TransactionOutput(
